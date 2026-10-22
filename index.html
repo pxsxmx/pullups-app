@@ -21,27 +21,28 @@
         .week-block { margin-top: 15px; }
         .week-title { font-weight: bold; margin-bottom: 10px; border-bottom: 2px solid var(--button-color); display: inline-block; padding-bottom: 2px; }
         .day-card { background-color: var(--card-bg); border-radius: 8px; padding: 12px; margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 4px solid var(--button-color); display: flex; align-items: flex-start; gap: 10px; }
-        .day-card.rest { border-left-color: #27ae60; }
+        .day-card.rest { border-left-color: #27ae60; background-color: #eafaf1; }
         .day-content { flex-grow: 1; }
         .day-name { font-weight: bold; font-size: 1em; margin-bottom: 5px; color: var(--button-color); }
         .day-card.rest .day-name { color: #27ae60; }
         .exercise { font-size: 0.9em; margin-bottom: 8px; }
-        .timer-btn { background-color: var(--button-color); color: var(--button-text-color); border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.8em; margin-left: 5px; cursor: pointer; }
+        .timer-btn { background-color: var(--button-color); color: var(--button-text-color); border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.8em; margin-left: 5px; cursor: pointer; display: inline-block; margin-top: 4px; }
         .checkbox-wrapper { padding-top: 2px; }
         input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--button-color); }
         
-        /* Плавающая панель таймера */
         #timer-bar { position: fixed; bottom: -100px; left: 0; width: 100%; background-color: #e74c3c; color: white; text-align: center; padding: 15px 0; font-size: 1.5em; font-weight: bold; box-shadow: 0 -2px 10px rgba(0,0,0,0.2); transition: bottom 0.3s; z-index: 1000; display: flex; justify-content: center; align-items: center; gap: 20px; }
         #timer-bar.active { bottom: 0; }
         #stop-timer { background: white; color: #e74c3c; border: none; padding: 5px 15px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 0.6em; }
+        #loader { text-align: center; color: var(--hint-color); padding: 20px; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <h1>💪 7 → 25 подтягиваний</h1>
-    <p class="subtitle">Методология без отказов. Отмечай прогресс и запускай таймеры.</p>
+    <p class="subtitle">Методология без отказов. Облачная синхронизация Telegram.</p>
 
-    <div id="workout-container"></div>
+    <div id="loader">Синхронизация с облаком...</div>
+    <div id="workout-container" style="display: none;"></div>
 
     <div id="timer-bar">
         ⏱ <span id="time-display">00:00</span>
@@ -66,7 +67,7 @@
                         days: [
                             { id: "w2d1", name: "День 1 (ПН) — Силовой", exercises: [{text: "Прямой хват: 5 подходов × 5 раз", time: 150}, {text: "Вис на двух руках: 3 подхода × 35 сек", time: 0}] },
                             { id: "w2d2", name: "День 2 (СР) — Технический", exercises: [{text: "Узкий обратный: 6 подходов × 4 раза", time: 120}, {text: "Негативы (5 сек вниз): 3 подхода × 3 раза", time: 150}] },
-                            { id: "w2d3", name: "День 3 (ПТ) — Прогулка", exercises: [{text: "Лестница прямой: 1, 2, 3, 4, 3, 2, 1", time: 60}, {text: "Статика: 3 подхода × 8-10 сек", time: 0}] }
+                            { id: "w2d3", name: "День 3 (ПТ) — Прогулка", exercises: [{text: "Лестница прямой: 1, 2, 3, 4, 3, 2, 1 (стоп на 4)", time: 60}, {text: "Статика: 3 подхода × 8-10 сек", time: 0}] }
                         ]
                     },
                     {
@@ -74,7 +75,7 @@
                         days: [
                             { id: "w3d1", name: "День 1 (ПН) — Силовой", exercises: [{text: "Прямой хват: 5 подходов × 5 раз (контроль темпа)", time: 150}, {text: "Вис на двух руках: 3 подхода × 40 сек", time: 0}] },
                             { id: "w3d2", name: "День 2 (СР) — Технический", exercises: [{text: "Узкий обратный: 5 подходов × 5 раз", time: 120}, {text: "Медленные негативы: 3 подхода × 2 раза", time: 150}] },
-                            { id: "w3d3", name: "День 3 (ПТ) — Прогулка", exercises: [{text: "Лестница прямой: 1, 2, 3, 4, 3, 2, 1", time: 60}, {text: "Статика: 3 подхода × 10 сек", time: 0}] }
+                            { id: "w3d3", name: "День 3 (ПТ) — Прогулка", exercises: [{text: "Лестница прямой: 1, 2, 3, 4, 3, 2, 1 (стоп на 4)", time: 60}, {text: "Статика: 3 подхода × 10 сек", time: 0}] }
                         ]
                     },
                     {
@@ -94,49 +95,151 @@
                         weekNum: 5,
                         days: [
                             { id: "w5d1", name: "День 1 (ПН) — Плотность", exercises: [{text: "Накопить 30 раз (не более 4 за подход)", time: 90}] },
-                            { id: "w5d2", name: "День 2 (СР) — Комби", exercises: [{text: "Разнохват: 3 подх × 4 на сторону", time: 120}, {text: "Широкий хват: 4 подх × 3 раза", time: 120}] },
-                            { id: "w5d3", name: "День 3 (ПТ) — Паузы", exercises: [{text: "Лестница с паузой 3 сек: 2, 3, 4, 5, 4, 3, 2", time: 90}] }
+                            { id: "w5d2", name: "День 2 (СР) — Комби", exercises: [{text: "Разнохват: 3 подх × 4 на сторону", time: 120}, {text: "Широкий хват: 4 подх × 3 раза", time: 120}, {text: "Вис: 3 подхода × 40 сек", time: 0}] },
+                            { id: "w5d3", name: "День 3 (ПТ) — Паузы", exercises: [{text: "Лестница с паузой 3 сек: 2, 3, 4, 5, 4, 3, 2", time: 90}, {text: "Узкий хват: 3 подхода × 4 раза", time: 0}] }
+                        ]
+                    },
+                    {
+                        weekNum: 6,
+                        days: [
+                            { id: "w6d1", name: "День 1 (ПН) — Плотность", exercises: [{text: "Накопить 35 раз (не более 4 за подход)", time: 90}] },
+                            { id: "w6d2", name: "День 2 (СР) — Комби", exercises: [{text: "Разнохват: 3 подх × 5 на сторону", time: 120}, {text: "Широкий хват: 4 подх × 4 раза", time: 120}, {text: "Вис: 3 подхода × 45 сек", time: 0}] },
+                            { id: "w6d3", name: "День 3 (ПТ) — Паузы", exercises: [{text: "Лестница с паузой 3 сек: 2, 3, 4, 5, 4, 3, 2", time: 90}, {text: "Узкий хват: 3 подхода × 5 раз", time: 0}] }
+                        ]
+                    },
+                    {
+                        weekNum: 7,
+                        days: [
+                            { id: "w7d1", name: "День 1 (ПН) — Плотность", exercises: [{text: "Накопить 40 раз (не более 4 за подход)", time: 90}] },
+                            { id: "w7d2", name: "День 2 (СР) — Комби", exercises: [{text: "Разнохват (контроль негатива): 3 подх × 5", time: 120}, {text: "Широкий хват: 4 подх × 4 раза", time: 120}, {text: "Вис: 3 подхода × 50 сек", time: 0}] },
+                            { id: "w7d3", name: "День 3 (ПТ) — Паузы", exercises: [{text: "Лестница с паузой 3 сек: 2, 3, 4, 5, 4, 3, 2", time: 90}, {text: "Узкий хват: 3 подхода × 5 раз", time: 0}] }
+                        ]
+                    },
+                    {
+                        weekNum: 8,
+                        days: [
+                            { id: "w8d1", name: "День 1 (ПН) — Разгрузка", rest: true, exercises: [{text: "Накопить 20 раз (подходы по 3-4)", time: 120}] },
+                            { id: "w8d2", name: "День 2 (СР) — Разгрузка", rest: true, exercises: [{text: "Вис на двух руках: 3 подхода × 40 сек", time: 0}, {text: "Статика: 3 подхода × 5–8 сек", time: 0}] },
+                            { id: "w8d3", name: "День 3 (ПТ) — Разгрузка", rest: true, exercises: [{text: "Лёгкая лестница: 1, 2, 3, 2, 1", time: 60}, {text: "Вис на расслабленных руках: 2 подхода × 30 сек", time: 0}] }
                         ]
                     }
-                    // Для экономии места в коде показаны недели 1-5. Остальные недели добавляются по той же логике из плана.
+                ]
+            },
+            {
+                month: "Месяц 3: Консолидация",
+                weeks: [
+                    {
+                        weekNum: 9,
+                        days: [
+                            { id: "w9d1", name: "День 1 (ПН) — 25 дробями", exercises: [{text: "Схема (прямой): 6+5+5+4+3+2 = 25", time: 120}] },
+                            { id: "w9d2", name: "День 2 (СР) — Подсобка", exercises: [{text: "Супер-медленные (5/5 сек): 3 подхода × 2 раза", time: 150}, {text: "Вис на одной руке: 3 подх × 10–15 сек", time: 0}, {text: "Обычные подтягивания: 2 подхода × 5–6 раз", time: 0}] },
+                            { id: "w9d3", name: "День 3 (ПТ) — Кровоток", exercises: [{text: "Прямой хват (очень легко): 4 подхода × 5-6 раз", time: 120}, {text: "Вис на расслабленных: 2 подхода × 40 сек", time: 0}] }
+                        ]
+                    },
+                    {
+                        weekNum: 10,
+                        days: [
+                            { id: "w10d1", name: "День 1 (ПН) — 25 дробями", exercises: [{text: "Схема: 7+5+5+4+4 = 25", time: 120}] },
+                            { id: "w10d2", name: "День 2 (СР) — Подсобка", exercises: [{text: "Супер-медленные (5/5 сек): 3 подхода × 2 раза", time: 150}, {text: "Вис на одной руке: 3 подх × 15 сек", time: 0}, {text: "Обычные подтягивания: 2 подхода × 6–7 раз", time: 0}] },
+                            { id: "w10d3", name: "День 3 (ПТ) — Кровоток", exercises: [{text: "Прямой хват (легко): 4 подхода × 6 раз", time: 120}, {text: "Вис: 2 подхода × 40 сек", time: 0}] }
+                        ]
+                    },
+                    {
+                        weekNum: 11,
+                        days: [
+                            { id: "w11d1", name: "День 1 (ПН) — 25 дробями", exercises: [{text: "Схема: 8+5+5+5+2 = 25", time: 120}] },
+                            { id: "w11d2", name: "День 2 (СР) — Подсобка", exercises: [{text: "Супер-медленные: 3 подхода × 3 раза", time: 150}, {text: "Вис на одной руке: 3 подх × 15 сек", time: 0}, {text: "Обычные подтягивания (контроль): 2 подх × 8 раз", time: 0}] },
+                            { id: "w11d3", name: "День 3 (ПТ) — Кровоток", exercises: [{text: "Подтягивания: 4 подхода × 6 раз", time: 120}, {text: "Вис: 2 подхода × 40 сек", time: 0}] }
+                        ]
+                    },
+                    {
+                        weekNum: 12,
+                        days: [
+                            { id: "w12d1", name: "День 1 (ПН) — 25 дробями", exercises: [{text: "Схема: 10+5+5+5 = 25", time: 120}] },
+                            { id: "w12d2", name: "День 2 (СР) — Репетиция", exercises: [{text: "Один подход на 12–15 раз (плавно, не в отказ)", time: 0}, {text: "Вис, растяжка (запомни легкость)", time: 0}] },
+                            { id: "w12d3", name: "День 3 (ПТ) — Кровоток (последняя)", exercises: [{text: "Подтягивания (идеальная техника): 3 подх × 6 раз", time: 120}, {text: "Вис на расслабленных: 2 подхода × 45 сек", time: 0}] }
+                        ]
+                    }
                 ]
             }
         ];
 
+        let savedProgress = {};
         const container = document.getElementById('workout-container');
+        const loader = document.getElementById('loader');
 
-        workoutData.forEach(monthData => {
-            let html = `<div class="month-header">${monthData.month}</div>`;
-            monthData.weeks.forEach(week => {
-                html += `<div class="week-block"><div class="week-title">Неделя ${week.weekNum}</div>`;
-                week.days.forEach(day => {
-                    const isChecked = localStorage.getItem(day.id) === 'true' ? 'checked' : '';
-                    let exercisesHtml = '';
-                    day.exercises.forEach(ex => {
-                        let btn = ex.time > 0 ? `<button class="timer-btn" onclick="startTimer(${ex.time})">⏱ ${ex.time/60 >= 1 ? (ex.time/60)+' мин' : ex.time+' сек'}</button>` : '';
-                        exercisesHtml += `<div class="exercise">• ${ex.text} ${btn}</div>`;
-                    });
-                    
-                    html += `
-                        <div class="day-card ${day.rest ? 'rest' : ''}">
-                            <div class="checkbox-wrapper">
-                                <input type="checkbox" id="${day.id}" ${isChecked} onchange="saveProgress('${day.id}', this.checked)">
-                            </div>
-                            <div class="day-content">
-                                <div class="day-name">${day.name}</div>
-                                ${exercisesHtml}
-                            </div>
-                        </div>
-                    `;
-                });
-                html += `</div>`;
-            });
-            container.innerHTML += html;
-        });
-
-        function saveProgress(id, checked) {
-            localStorage.setItem(id, checked);
+        // Инициализация приложения и загрузка данных из облака Telegram
+        function initApp() {
             if (window.Telegram && window.Telegram.WebApp) {
+                window.Telegram.WebApp.expand();
+                
+                if (window.Telegram.WebApp.CloudStorage) {
+                    window.Telegram.WebApp.CloudStorage.getItem('pullups_progress', (err, value) => {
+                        if (!err && value) {
+                            try { savedProgress = JSON.parse(value); } catch(e) {}
+                        }
+                        renderWorkouts();
+                    });
+                } else {
+                    // Fallback если облако недоступно
+                    try { savedProgress = JSON.parse(localStorage.getItem('pullups_progress') || '{}'); } catch(e) {}
+                    renderWorkouts();
+                }
+            } else {
+                try { savedProgress = JSON.parse(localStorage.getItem('pullups_progress') || '{}'); } catch(e) {}
+                renderWorkouts();
+            }
+        }
+
+        // Отрисовка интерфейса
+        function renderWorkouts() {
+            let fullHtml = '';
+            workoutData.forEach(monthData => {
+                let html = `<div class="month-header">${monthData.month}</div>`;
+                monthData.weeks.forEach(week => {
+                    html += `<div class="week-block"><div class="week-title">Неделя ${week.weekNum}</div>`;
+                    week.days.forEach(day => {
+                        const isChecked = savedProgress[day.id] ? 'checked' : '';
+                        let exercisesHtml = '';
+                        day.exercises.forEach(ex => {
+                            let btn = ex.time > 0 ? `<button class="timer-btn" onclick="startTimer(${ex.time})">⏱ ${ex.time/60 >= 1 ? (ex.time/60)+' мин' : ex.time+' сек'}</button>` : '';
+                            exercisesHtml += `<div class="exercise">• ${ex.text} <br>${btn}</div>`;
+                        });
+                        
+                        html += `
+                            <div class="day-card ${day.rest ? 'rest' : ''}">
+                                <div class="checkbox-wrapper">
+                                    <input type="checkbox" id="${day.id}" ${isChecked} onchange="toggleProgress('${day.id}', this.checked)">
+                                </div>
+                                <div class="day-content">
+                                    <div class="day-name">${day.name}</div>
+                                    ${exercisesHtml}
+                                </div>
+                            </div>
+                        `;
+                    });
+                    html += `</div>`;
+                });
+                fullHtml += html;
+            });
+            
+            loader.style.display = 'none';
+            container.innerHTML = fullHtml;
+            container.style.display = 'block';
+        }
+
+        // Сохранение в облако Telegram
+        function toggleProgress(id, checked) {
+            savedProgress[id] = checked;
+            const val = JSON.stringify(savedProgress);
+            
+            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.CloudStorage) {
+                window.Telegram.WebApp.CloudStorage.setItem('pullups_progress', val);
+            }
+            // Дублируем в localStorage на всякий случай
+            localStorage.setItem('pullups_progress', val);
+
+            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.HapticFeedback) {
                 window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
             }
         }
@@ -148,8 +251,9 @@
         function startTimer(seconds) {
             clearInterval(countdown);
             timerBar.classList.add('active');
+            timerBar.style.backgroundColor = "#e74c3c";
             
-            if (window.Telegram && window.Telegram.WebApp) {
+            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.HapticFeedback) {
                 window.Telegram.WebApp.HapticFeedback.notificationOccurred('success');
             }
 
@@ -164,7 +268,7 @@
                     timerBar.style.backgroundColor = "#27ae60";
                     timeDisplay.textContent = "ВРЕМЯ ВЫШЛО!";
                     playSound();
-                    if (window.Telegram && window.Telegram.WebApp) {
+                    if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.HapticFeedback) {
                         window.Telegram.WebApp.HapticFeedback.notificationOccurred('warning');
                     }
                     setTimeout(() => stopTimer(), 4000);
@@ -175,7 +279,6 @@
         }
 
         function displayTimeLeft(seconds) {
-            timerBar.style.backgroundColor = "#e74c3c";
             const minutes = Math.floor(seconds / 60);
             const remainderSeconds = seconds % 60;
             timeDisplay.textContent = `${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`;
@@ -187,18 +290,21 @@
         }
 
         function playSound() {
-            const ctx = new (window.AudioContext || window.webkitAudioContext)();
-            const osc = ctx.createOscillator();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(440, ctx.currentTime);
-            osc.connect(ctx.destination);
-            osc.start();
-            osc.stop(ctx.currentTime + 0.5);
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(440, ctx.currentTime);
+                osc.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.5);
+            } catch (e) {
+                console.log("Audio not supported");
+            }
         }
 
-        if (window.Telegram && window.Telegram.WebApp) {
-            window.Telegram.WebApp.expand();
-        }
+        // Запуск
+        initApp();
     </script>
 </body>
 </html>
