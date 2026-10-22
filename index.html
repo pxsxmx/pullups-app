@@ -21,7 +21,8 @@
         .week-block { margin-top: 15px; }
         .week-title { font-weight: bold; margin-bottom: 10px; border-bottom: 2px solid var(--button-color); display: inline-block; padding-bottom: 2px; }
         .day-card { background-color: var(--card-bg); border-radius: 8px; padding: 12px; margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 4px solid var(--button-color); display: flex; align-items: flex-start; gap: 10px; }
-        .day-card.rest { border-left-color: #27ae60; background-color: #eafaf1; }
+        /* Исправлен фон для темной темы */
+        .day-card.rest { border-left-color: #27ae60; background-color: rgba(39, 174, 96, 0.1); }
         .day-content { flex-grow: 1; }
         .day-name { font-weight: bold; font-size: 1em; margin-bottom: 5px; color: var(--button-color); }
         .day-card.rest .day-name { color: #27ae60; }
@@ -52,75 +53,75 @@
     <script>
         const workoutData = [
             {
-                month: "Месяц 1: Фундамент",
+                month: "Месяц 1: Фундамент (Усиленный)",
                 weeks: [
                     {
                         weekNum: 1,
                         days: [
-                            { id: "w1d1", name: "День 1 (ПН) — Силовой", exercises: [{text: "Прямой хват: 5 подходов × 4 раза", time: 150}, {text: "Вис на двух руках: 3 подхода × 30 сек", time: 0}] },
-                            { id: "w1d2", name: "День 2 (СР) — Технический", exercises: [{text: "Узкий обратный: 6 подходов × 3 раза", time: 120}, {text: "Негативы (5 сек вниз): 3 подхода × 2 раза", time: 150}] },
-                            { id: "w1d3", name: "День 3 (ПТ) — Прогулка", exercises: [{text: "Лестница прямой: 1, 2, 3, 4, 3, 2, 1 (стоп на 4)", time: 60}, {text: "Статика: 3 подхода × 5–8 сек", time: 0}] }
+                            { id: "w1d1", name: "День 1 (ПН) — Силовой", exercises: [{text: "Прямой хват: 5 подходов × 5 раз", time: 150}, {text: "Вис на двух руках: 3 подхода × 30 сек", time: 0}] },
+                            { id: "w1d2", name: "День 2 (СР) — Технический", exercises: [{text: "Узкий обратный: 5 подходов × 4 раза", time: 120}, {text: "Негативы (5 сек вниз): 3 подхода × 3 раза", time: 150}] },
+                            { id: "w1d3", name: "День 3 (ПТ) — Прогулка", exercises: [{text: "Лестница прямой: 1, 2, 3, 4, 5, 4, 3, 2, 1 (стоп на 5)", time: 60}, {text: "Статика: 3 подхода × 8 сек", time: 0}] }
                         ]
                     },
                     {
                         weekNum: 2,
                         days: [
-                            { id: "w2d1", name: "День 1 (ПН) — Силовой", exercises: [{text: "Прямой хват: 5 подходов × 5 раз", time: 150}, {text: "Вис на двух руках: 3 подхода × 35 сек", time: 0}] },
-                            { id: "w2d2", name: "День 2 (СР) — Технический", exercises: [{text: "Узкий обратный: 6 подходов × 4 раза", time: 120}, {text: "Негативы (5 сек вниз): 3 подхода × 3 раза", time: 150}] },
-                            { id: "w2d3", name: "День 3 (ПТ) — Прогулка", exercises: [{text: "Лестница прямой: 1, 2, 3, 4, 3, 2, 1 (стоп на 4)", time: 60}, {text: "Статика: 3 подхода × 8-10 сек", time: 0}] }
+                            { id: "w2d1", name: "День 1 (ПН) — Силовой", exercises: [{text: "Прямой хват: 6 подходов × 5 раз", time: 150}, {text: "Вис на двух руках: 3 подхода × 35 сек", time: 0}] },
+                            { id: "w2d2", name: "День 2 (СР) — Технический", exercises: [{text: "Узкий обратный: 5 подходов × 5 раз", time: 120}, {text: "Негативы (5 сек вниз): 4 подхода × 3 раза", time: 150}] },
+                            { id: "w2d3", name: "День 3 (ПТ) — Прогулка", exercises: [{text: "Лестница прямой: 1, 2, 3, 4, 5, 4, 3, 2, 1", time: 60}, {text: "Статика: 3 подхода × 10 сек", time: 0}] }
                         ]
                     },
                     {
                         weekNum: 3,
                         days: [
-                            { id: "w3d1", name: "День 1 (ПН) — Силовой", exercises: [{text: "Прямой хват: 5 подходов × 5 раз (контроль темпа)", time: 150}, {text: "Вис на двух руках: 3 подхода × 40 сек", time: 0}] },
-                            { id: "w3d2", name: "День 2 (СР) — Технический", exercises: [{text: "Узкий обратный: 5 подходов × 5 раз", time: 120}, {text: "Медленные негативы: 3 подхода × 2 раза", time: 150}] },
-                            { id: "w3d3", name: "День 3 (ПТ) — Прогулка", exercises: [{text: "Лестница прямой: 1, 2, 3, 4, 3, 2, 1 (стоп на 4)", time: 60}, {text: "Статика: 3 подхода × 10 сек", time: 0}] }
+                            { id: "w3d1", name: "День 1 (ПН) — Силовой", exercises: [{text: "Прямой хват: 6 подходов × 5 раз (контроль темпа)", time: 150}, {text: "Вис на двух руках: 3 подхода × 40 сек", time: 0}] },
+                            { id: "w3d2", name: "День 2 (СР) — Технический", exercises: [{text: "Узкий обратный: 6 подходов × 5 раз", time: 120}, {text: "Медленные негативы: 3 подхода × 3 раза", time: 150}] },
+                            { id: "w3d3", name: "День 3 (ПТ) — Прогулка", exercises: [{text: "Лестница прямой: 1, 2, 3, 4, 5, 4, 3, 2, 1", time: 60}, {text: "Статика: 3 подхода × 12 сек", time: 0}] }
                         ]
                     },
                     {
                         weekNum: 4,
                         days: [
-                            { id: "w4d1", name: "День 1 (ПН) — Разгрузка", rest: true, exercises: [{text: "Прямой хват: 3 подхода × 4 раза", time: 120}, {text: "Вис: 2 подхода × 30 сек", time: 0}] },
-                            { id: "w4d2", name: "День 2 (СР) — Разгрузка", rest: true, exercises: [{text: "Узкий обратный: 3 подхода × 3 раза", time: 120}, {text: "Негативы: 2 подхода × 2 раза", time: 0}] },
-                            { id: "w4d3", name: "День 3 (ПТ) — Разгрузка", rest: true, exercises: [{text: "Лестница: 1, 2, 3, 2, 1", time: 60}, {text: "Статика: 2 подхода × 5 сек", time: 0}] }
+                            { id: "w4d1", name: "День 1 (ПН) — Разгрузка", rest: true, exercises: [{text: "Прямой хват: 3 подхода × 5 раз", time: 120}, {text: "Вис: 2 подхода × 30 сек", time: 0}] },
+                            { id: "w4d2", name: "День 2 (СР) — Разгрузка", rest: true, exercises: [{text: "Узкий обратный: 3 подхода × 4 раза", time: 120}, {text: "Негативы: 2 подхода × 2 раза", time: 0}] },
+                            { id: "w4d3", name: "День 3 (ПТ) — Разгрузка", rest: true, exercises: [{text: "Лестница: 1, 2, 3, 4, 3, 2, 1", time: 60}, {text: "Статика: 2 подхода × 8 сек", time: 0}] }
                         ]
                     }
                 ]
             },
             {
-                month: "Месяц 2: Наращивание",
+                month: "Месяц 2: Наращивание (Плотность)",
                 weeks: [
                     {
                         weekNum: 5,
                         days: [
-                            { id: "w5d1", name: "День 1 (ПН) — Плотность", exercises: [{text: "Накопить 30 раз (не более 4 за подход)", time: 90}] },
-                            { id: "w5d2", name: "День 2 (СР) — Комби", exercises: [{text: "Разнохват: 3 подх × 4 на сторону", time: 120}, {text: "Широкий хват: 4 подх × 3 раза", time: 120}, {text: "Вис: 3 подхода × 40 сек", time: 0}] },
-                            { id: "w5d3", name: "День 3 (ПТ) — Паузы", exercises: [{text: "Лестница с паузой 3 сек: 2, 3, 4, 5, 4, 3, 2", time: 90}, {text: "Узкий хват: 3 подхода × 4 раза", time: 0}] }
+                            { id: "w5d1", name: "День 1 (ПН) — Плотность", exercises: [{text: "Накопить 35 раз за 15 мин (не более 5 за подход)", time: 90}] },
+                            { id: "w5d2", name: "День 2 (СР) — Комби", exercises: [{text: "Разнохват: 3 подх × 5 на сторону", time: 120}, {text: "Широкий хват: 4 подх × 4 раза", time: 120}, {text: "Вис: 3 подхода × 40 сек", time: 0}] },
+                            { id: "w5d3", name: "День 3 (ПТ) — Паузы", exercises: [{text: "Лестница с паузой 3 сек: 2, 3, 4, 5, 4, 3, 2", time: 90}, {text: "Узкий хват: 3 подхода × 5 раз", time: 0}] }
                         ]
                     },
                     {
                         weekNum: 6,
                         days: [
-                            { id: "w6d1", name: "День 1 (ПН) — Плотность", exercises: [{text: "Накопить 35 раз (не более 4 за подход)", time: 90}] },
-                            { id: "w6d2", name: "День 2 (СР) — Комби", exercises: [{text: "Разнохват: 3 подх × 5 на сторону", time: 120}, {text: "Широкий хват: 4 подх × 4 раза", time: 120}, {text: "Вис: 3 подхода × 45 сек", time: 0}] },
-                            { id: "w6d3", name: "День 3 (ПТ) — Паузы", exercises: [{text: "Лестница с паузой 3 сек: 2, 3, 4, 5, 4, 3, 2", time: 90}, {text: "Узкий хват: 3 подхода × 5 раз", time: 0}] }
+                            { id: "w6d1", name: "День 1 (ПН) — Плотность", exercises: [{text: "Накопить 40 раз за 15 мин (не более 5 за подход)", time: 90}] },
+                            { id: "w6d2", name: "День 2 (СР) — Комби", exercises: [{text: "Разнохват: 3 подх × 6 на сторону", time: 120}, {text: "Широкий хват: 4 подх × 5 раз", time: 120}, {text: "Вис: 3 подхода × 45 сек", time: 0}] },
+                            { id: "w6d3", name: "День 3 (ПТ) — Паузы", exercises: [{text: "Лестница с паузой 3 сек: 2, 3, 4, 5, 6, 5, 4, 3, 2", time: 90}, {text: "Узкий хват: 3 подхода × 6 раз", time: 0}] }
                         ]
                     },
                     {
                         weekNum: 7,
                         days: [
-                            { id: "w7d1", name: "День 1 (ПН) — Плотность", exercises: [{text: "Накопить 40 раз (не более 4 за подход)", time: 90}] },
-                            { id: "w7d2", name: "День 2 (СР) — Комби", exercises: [{text: "Разнохват (контроль негатива): 3 подх × 5", time: 120}, {text: "Широкий хват: 4 подх × 4 раза", time: 120}, {text: "Вис: 3 подхода × 50 сек", time: 0}] },
-                            { id: "w7d3", name: "День 3 (ПТ) — Паузы", exercises: [{text: "Лестница с паузой 3 сек: 2, 3, 4, 5, 4, 3, 2", time: 90}, {text: "Узкий хват: 3 подхода × 5 раз", time: 0}] }
+                            { id: "w7d1", name: "День 1 (ПН) — Плотность", exercises: [{text: "Накопить 45 раз за 15 мин (не более 5 за подход)", time: 90}] },
+                            { id: "w7d2", name: "День 2 (СР) — Комби", exercises: [{text: "Разнохват (контроль негатива): 3 подх × 6", time: 120}, {text: "Широкий хват: 5 подх × 4 раза", time: 120}, {text: "Вис: 3 подхода × 50 сек", time: 0}] },
+                            { id: "w7d3", name: "День 3 (ПТ) — Паузы", exercises: [{text: "Лестница с паузой 3 сек: 2, 3, 4, 5, 6, 5, 4, 3, 2", time: 90}, {text: "Узкий хват: 4 подхода × 5 раз", time: 0}] }
                         ]
                     },
                     {
                         weekNum: 8,
                         days: [
-                            { id: "w8d1", name: "День 1 (ПН) — Разгрузка", rest: true, exercises: [{text: "Накопить 20 раз (подходы по 3-4)", time: 120}] },
+                            { id: "w8d1", name: "День 1 (ПН) — Разгрузка", rest: true, exercises: [{text: "Накопить 25 раз (подходы по 3-4)", time: 120}] },
                             { id: "w8d2", name: "День 2 (СР) — Разгрузка", rest: true, exercises: [{text: "Вис на двух руках: 3 подхода × 40 сек", time: 0}, {text: "Статика: 3 подхода × 5–8 сек", time: 0}] },
-                            { id: "w8d3", name: "День 3 (ПТ) — Разгрузка", rest: true, exercises: [{text: "Лёгкая лестница: 1, 2, 3, 2, 1", time: 60}, {text: "Вис на расслабленных руках: 2 подхода × 30 сек", time: 0}] }
+                            { id: "w8d3", name: "День 3 (ПТ) — Разгрузка", rest: true, exercises: [{text: "Лёгкая лестница: 1, 2, 3, 4, 3, 2, 1", time: 60}, {text: "Вис на расслабленных руках: 2 подхода × 30 сек", time: 0}] }
                         ]
                     }
                 ]
@@ -131,33 +132,33 @@
                     {
                         weekNum: 9,
                         days: [
-                            { id: "w9d1", name: "День 1 (ПН) — 25 дробями", exercises: [{text: "Схема (прямой): 6+5+5+4+3+2 = 25", time: 120}] },
-                            { id: "w9d2", name: "День 2 (СР) — Подсобка", exercises: [{text: "Супер-медленные (5/5 сек): 3 подхода × 2 раза", time: 150}, {text: "Вис на одной руке: 3 подх × 10–15 сек", time: 0}, {text: "Обычные подтягивания: 2 подхода × 5–6 раз", time: 0}] },
-                            { id: "w9d3", name: "День 3 (ПТ) — Кровоток", exercises: [{text: "Прямой хват (очень легко): 4 подхода × 5-6 раз", time: 120}, {text: "Вис на расслабленных: 2 подхода × 40 сек", time: 0}] }
+                            { id: "w9d1", name: "День 1 (ПН) — 28 дробями", exercises: [{text: "Схема (прямой): 7+6+5+4+3+3 = 28", time: 120}] },
+                            { id: "w9d2", name: "День 2 (СР) — Подсобка", exercises: [{text: "Супер-медленные (5/5 сек): 3 подхода × 3 раза", time: 150}, {text: "Вис на одной руке: 3 подх × 10–15 сек", time: 0}, {text: "Обычные подтягивания: 3 подхода × 6 раз", time: 0}] },
+                            { id: "w9d3", name: "День 3 (ПТ) — Кровоток", exercises: [{text: "Прямой хват (очень легко): 4 подхода × 6 раз", time: 120}, {text: "Вис на расслабленных: 2 подхода × 40 сек", time: 0}] }
                         ]
                     },
                     {
                         weekNum: 10,
                         days: [
-                            { id: "w10d1", name: "День 1 (ПН) — 25 дробями", exercises: [{text: "Схема: 7+5+5+4+4 = 25", time: 120}] },
-                            { id: "w10d2", name: "День 2 (СР) — Подсобка", exercises: [{text: "Супер-медленные (5/5 сек): 3 подхода × 2 раза", time: 150}, {text: "Вис на одной руке: 3 подх × 15 сек", time: 0}, {text: "Обычные подтягивания: 2 подхода × 6–7 раз", time: 0}] },
-                            { id: "w10d3", name: "День 3 (ПТ) — Кровоток", exercises: [{text: "Прямой хват (легко): 4 подхода × 6 раз", time: 120}, {text: "Вис: 2 подхода × 40 сек", time: 0}] }
+                            { id: "w10d1", name: "День 1 (ПН) — 28 дробями", exercises: [{text: "Схема: 8+6+5+5+4 = 28", time: 120}] },
+                            { id: "w10d2", name: "День 2 (СР) — Подсобка", exercises: [{text: "Супер-медленные (5/5 сек): 3 подхода × 3 раза", time: 150}, {text: "Вис на одной руке: 3 подх × 15 сек", time: 0}, {text: "Обычные подтягивания: 3 подхода × 7 раз", time: 0}] },
+                            { id: "w10d3", name: "День 3 (ПТ) — Кровоток", exercises: [{text: "Прямой хват (легко): 4 подхода × 7 раз", time: 120}, {text: "Вис: 2 подхода × 40 сек", time: 0}] }
                         ]
                     },
                     {
                         weekNum: 11,
                         days: [
-                            { id: "w11d1", name: "День 1 (ПН) — 25 дробями", exercises: [{text: "Схема: 8+5+5+5+2 = 25", time: 120}] },
-                            { id: "w11d2", name: "День 2 (СР) — Подсобка", exercises: [{text: "Супер-медленные: 3 подхода × 3 раза", time: 150}, {text: "Вис на одной руке: 3 подх × 15 сек", time: 0}, {text: "Обычные подтягивания (контроль): 2 подх × 8 раз", time: 0}] },
-                            { id: "w11d3", name: "День 3 (ПТ) — Кровоток", exercises: [{text: "Подтягивания: 4 подхода × 6 раз", time: 120}, {text: "Вис: 2 подхода × 40 сек", time: 0}] }
+                            { id: "w11d1", name: "День 1 (ПН) — 30 дробями", exercises: [{text: "Схема: 10+7+6+4+3 = 30", time: 120}] },
+                            { id: "w11d2", name: "День 2 (СР) — Подсобка", exercises: [{text: "Супер-медленные: 3 подхода × 4 раза", time: 150}, {text: "Вис на одной руке: 3 подх × 15 сек", time: 0}, {text: "Обычные подтягивания (контроль): 3 подх × 8 раз", time: 0}] },
+                            { id: "w11d3", name: "День 3 (ПТ) — Кровоток", exercises: [{text: "Подтягивания: 4 подхода × 8 раз", time: 120}, {text: "Вис: 2 подхода × 40 сек", time: 0}] }
                         ]
                     },
                     {
                         weekNum: 12,
                         days: [
-                            { id: "w12d1", name: "День 1 (ПН) — 25 дробями", exercises: [{text: "Схема: 10+5+5+5 = 25", time: 120}] },
-                            { id: "w12d2", name: "День 2 (СР) — Репетиция", exercises: [{text: "Один подход на 12–15 раз (плавно, не в отказ)", time: 0}, {text: "Вис, растяжка (запомни легкость)", time: 0}] },
-                            { id: "w12d3", name: "День 3 (ПТ) — Кровоток (последняя)", exercises: [{text: "Подтягивания (идеальная техника): 3 подх × 6 раз", time: 120}, {text: "Вис на расслабленных: 2 подхода × 45 сек", time: 0}] }
+                            { id: "w12d1", name: "День 1 (ПН) — 30 дробями", exercises: [{text: "Схема: 12+8+6+4 = 30", time: 120}] },
+                            { id: "w12d2", name: "День 2 (СР) — Репетиция", exercises: [{text: "Один подход на 15–18 раз (плавно, не в отказ)", time: 0}, {text: "Вис, растяжка (запомни легкость)", time: 0}] },
+                            { id: "w12d3", name: "День 3 (ПТ) — Кровоток (последняя)", exercises: [{text: "Подтягивания (идеальная техника): 3 подх × 8 раз", time: 120}, {text: "Вис на расслабленных: 2 подхода × 45 сек", time: 0}] }
                         ]
                     }
                 ]
@@ -168,7 +169,6 @@
         const container = document.getElementById('workout-container');
         const loader = document.getElementById('loader');
 
-        // Инициализация приложения и загрузка данных из облака Telegram
         function initApp() {
             if (window.Telegram && window.Telegram.WebApp) {
                 window.Telegram.WebApp.expand();
@@ -181,7 +181,6 @@
                         renderWorkouts();
                     });
                 } else {
-                    // Fallback если облако недоступно
                     try { savedProgress = JSON.parse(localStorage.getItem('pullups_progress') || '{}'); } catch(e) {}
                     renderWorkouts();
                 }
@@ -191,7 +190,6 @@
             }
         }
 
-        // Отрисовка интерфейса
         function renderWorkouts() {
             let fullHtml = '';
             workoutData.forEach(monthData => {
@@ -228,7 +226,6 @@
             container.style.display = 'block';
         }
 
-        // Сохранение в облако Telegram
         function toggleProgress(id, checked) {
             savedProgress[id] = checked;
             const val = JSON.stringify(savedProgress);
@@ -236,7 +233,6 @@
             if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.CloudStorage) {
                 window.Telegram.WebApp.CloudStorage.setItem('pullups_progress', val);
             }
-            // Дублируем в localStorage на всякий случай
             localStorage.setItem('pullups_progress', val);
 
             if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.HapticFeedback) {
@@ -303,7 +299,6 @@
             }
         }
 
-        // Запуск
         initApp();
     </script>
 </body>
